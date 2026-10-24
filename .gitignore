@@ -5,3 +5,6 @@ __pycache__/
 .env
 .vscode/
 .DS_Store
+
+__pycache__/
+*.py[cod]
