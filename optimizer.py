@@ -220,8 +220,8 @@ def evaluate_scheduling(vm: pd.Series, stats: pd.Series) -> dict | None:
     offhours_cpu = stats["offhours_avg_cpu"]
     pattern = vm.get("workload_pattern", "")
     
-    # Qualifies if identified as Weekend Idle or off-hours CPU < 10%
-    if pattern == "Weekend Idle" or offhours_cpu < 8.0:
+    # Qualifies if identified as Weekend Idle or off-hours CPU is low in non-prod
+    if pattern in ["Weekend Idle", "Underutilized"] or offhours_cpu < 12.0:
         curr_cost = vm["monthly_cost"]
         # Off-hours savings: 7 PM - 8 AM (13 hrs/day M-F) + 48 hrs weekend = 113 hrs idle / 168 total hrs = 67.2%
         savings_factor = 0.65
