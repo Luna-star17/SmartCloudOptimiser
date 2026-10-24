@@ -1,0 +1,65 @@
+resource_id,name,type,region,environment,owner,vcpu,ram_gb,disk_gb,creation_date,monthly_cost
+VM-001,marketing-web-development-vm-001,VM (u1.xlarge),in-delhi-01,Development,Marketing-Web,4.0,16.0,100.0,2026-08-15,6200
+VM-002,marketing-web-development-vm-002,VM (u1.xlarge),in-delhi-01,Development,Marketing-Web,4.0,16.0,100.0,2026-08-15,6200
+VM-003,marketing-web-development-vm-003,VM (u1.xlarge),in-bengaluru-01,Development,Marketing-Web,4.0,16.0,100.0,2026-08-15,6200
+VM-004,marketing-web-development-vm-004,VM (u1.xlarge),in-mumbai-01,Development,Marketing-Web,4.0,16.0,100.0,2026-08-15,6200
+VM-005,marketing-web-development-vm-005,VM (u1.xlarge),in-mumbai-01,Development,Marketing-Web,4.0,16.0,100.0,2026-08-15,6200
+VM-006,marketing-web-development-vm-006,VM (u1.xlarge),in-mumbai-01,Development,Marketing-Web,4.0,16.0,100.0,2026-08-15,6200
+VM-007,devops-infra-staging-vm-007,VM (u1.2xlarge),in-delhi-01,Staging,DevOps-Infra,8.0,32.0,100.0,2026-08-15,12000
+VM-008,devops-infra-staging-vm-008,VM (u1.2xlarge),in-delhi-01,Staging,DevOps-Infra,8.0,32.0,100.0,2026-08-15,12000
+VM-009,devops-infra-staging-vm-009,VM (u1.2xlarge),in-noida-01,Staging,DevOps-Infra,8.0,32.0,100.0,2026-08-15,12000
+VM-010,devops-infra-staging-vm-010,VM (u1.2xlarge),in-delhi-01,Staging,DevOps-Infra,8.0,32.0,100.0,2026-08-15,12000
+VM-011,devops-infra-staging-vm-011,VM (u1.2xlarge),in-delhi-01,Staging,DevOps-Infra,8.0,32.0,100.0,2026-08-15,12000
+VM-012,checkout-core-development-vm-012,VM (u1.large),in-delhi-01,Development,Checkout-Core,4.0,8.0,100.0,2026-08-15,3600
+VM-013,checkout-core-development-vm-013,VM (u1.large),in-mumbai-01,Development,Checkout-Core,4.0,8.0,100.0,2026-08-15,3600
+VM-014,checkout-core-development-vm-014,VM (u1.large),in-mumbai-01,Development,Checkout-Core,4.0,8.0,100.0,2026-08-15,3600
+VM-015,checkout-core-development-vm-015,VM (u1.large),in-delhi-01,Development,Checkout-Core,4.0,8.0,100.0,2026-08-15,3600
+VM-016,checkout-core-development-vm-016,VM (u1.large),in-mumbai-01,Development,Checkout-Core,4.0,8.0,100.0,2026-08-15,3600
+VM-017,checkout-core-development-vm-017,VM (u1.large),in-noida-01,Development,Checkout-Core,4.0,8.0,100.0,2026-08-15,3600
+VM-018,checkout-core-development-vm-018,VM (u1.large),in-mumbai-01,Development,Checkout-Core,4.0,8.0,100.0,2026-08-15,3600
+VM-019,search-engine-staging-vm-019,VM (u1.xlarge),in-noida-01,Staging,Search-Engine,4.0,16.0,100.0,2026-08-15,6200
+VM-020,search-engine-staging-vm-020,VM (u1.xlarge),in-bengaluru-01,Staging,Search-Engine,4.0,16.0,100.0,2026-08-15,6200
+VM-021,search-engine-staging-vm-021,VM (u1.xlarge),in-delhi-01,Staging,Search-Engine,4.0,16.0,100.0,2026-08-15,6200
+VM-022,search-engine-staging-vm-022,VM (u1.xlarge),in-mumbai-01,Staging,Search-Engine,4.0,16.0,100.0,2026-08-15,6200
+VM-023,search-engine-staging-vm-023,VM (u1.xlarge),in-noida-01,Staging,Search-Engine,4.0,16.0,100.0,2026-08-15,6200
+VM-024,checkout-core-production-vm-024,VM (u1.2xlarge),in-bengaluru-01,Production,Checkout-Core,8.0,32.0,100.0,2026-08-15,12000
+VM-025,checkout-core-production-vm-025,VM (u1.2xlarge),in-bengaluru-01,Production,Checkout-Core,8.0,32.0,100.0,2026-08-15,12000
+VM-026,checkout-core-production-vm-026,VM (u1.2xlarge),in-mumbai-01,Production,Checkout-Core,8.0,32.0,100.0,2026-08-15,12000
+VM-027,checkout-core-production-vm-027,VM (u1.2xlarge),in-mumbai-01,Production,Checkout-Core,8.0,32.0,100.0,2026-08-15,12000
+VM-028,checkout-core-production-vm-028,VM (u1.2xlarge),in-bengaluru-01,Production,Checkout-Core,8.0,32.0,100.0,2026-08-15,12000
+VM-029,search-engine-production-vm-029,VM (u1.4xlarge),in-delhi-01,Production,Search-Engine,16.0,64.0,100.0,2026-08-15,23500
+VM-030,search-engine-production-vm-030,VM (u1.4xlarge),in-delhi-01,Production,Search-Engine,16.0,64.0,100.0,2026-08-15,23500
+VM-031,search-engine-production-vm-031,VM (u1.4xlarge),in-noida-01,Production,Search-Engine,16.0,64.0,100.0,2026-08-15,23500
+VM-032,search-engine-production-vm-032,VM (u1.4xlarge),in-delhi-01,Production,Search-Engine,16.0,64.0,100.0,2026-08-15,23500
+VM-033,data-platform-production-vm-033,VM (u1.4xlarge),in-bengaluru-01,Production,Data-Platform,16.0,64.0,100.0,2026-08-15,23500
+VM-034,data-platform-production-vm-034,VM (u1.4xlarge),in-bengaluru-01,Production,Data-Platform,16.0,64.0,100.0,2026-08-15,23500
+VM-035,data-platform-production-vm-035,VM (u1.4xlarge),in-bengaluru-01,Production,Data-Platform,16.0,64.0,100.0,2026-08-15,23500
+VM-036,data-platform-production-vm-036,VM (u1.4xlarge),in-delhi-01,Production,Data-Platform,16.0,64.0,100.0,2026-08-15,23500
+VM-037,checkout-core-production-vm-037,VM (u1.2xlarge),in-noida-01,Production,Checkout-Core,8.0,32.0,100.0,2026-08-15,12000
+VM-038,checkout-core-production-vm-038,VM (u1.2xlarge),in-delhi-01,Production,Checkout-Core,8.0,32.0,100.0,2026-08-15,12000
+VM-039,checkout-core-production-vm-039,VM (u1.2xlarge),in-noida-01,Production,Checkout-Core,8.0,32.0,100.0,2026-08-15,12000
+VM-040,checkout-core-production-vm-040,VM (u1.2xlarge),in-delhi-01,Production,Checkout-Core,8.0,32.0,100.0,2026-08-15,12000
+VM-041,devops-infra-production-vm-041,VM (u1.large),in-bengaluru-01,Production,DevOps-Infra,4.0,8.0,100.0,2026-08-15,3600
+VM-042,devops-infra-production-vm-042,VM (u1.large),in-bengaluru-01,Production,DevOps-Infra,4.0,8.0,100.0,2026-08-15,3600
+VM-043,devops-infra-production-vm-043,VM (u1.large),in-mumbai-01,Production,DevOps-Infra,4.0,8.0,100.0,2026-08-15,3600
+VM-044,analytics-bi-production-vm-044,VM (u1.large),in-delhi-01,Production,Analytics-BI,4.0,8.0,100.0,2026-08-15,3600
+VM-045,analytics-bi-production-vm-045,VM (u1.large),in-delhi-01,Production,Analytics-BI,4.0,8.0,100.0,2026-08-15,3600
+VM-046,analytics-bi-production-vm-046,VM (u1.large),in-mumbai-01,Production,Analytics-BI,4.0,8.0,100.0,2026-08-15,3600
+VM-047,analytics-bi-production-vm-047,VM (u1.large),in-bengaluru-01,Production,Analytics-BI,4.0,8.0,100.0,2026-08-15,3600
+VM-048,data-platform-production-vm-048,VM (u1.xlarge),in-delhi-01,Production,Data-Platform,4.0,16.0,100.0,2026-08-15,6200
+VM-049,data-platform-production-vm-049,VM (u1.xlarge),in-mumbai-01,Production,Data-Platform,4.0,16.0,100.0,2026-08-15,6200
+VM-050,data-platform-production-vm-050,VM (u1.xlarge),in-delhi-01,Production,Data-Platform,4.0,16.0,100.0,2026-08-15,6200
+vol-0091,Old website media backup,Block-Storage-SSD,in-delhi-01,Staging,Marketing-Web,,,500.0,2026-07-01,1800
+vol-0142,Legacy Hadoop cluster disk,Block-Storage-NVMe,in-mumbai-01,Staging,Data-Platform,,,1000.0,2026-07-01,4200
+vol-0288,Decommissioned Jenkins workspace,Block-Storage-SSD,in-bengaluru-01,Staging,DevOps-Infra,,,200.0,2026-07-01,800
+vol-0315,Historical log archive,Block-Storage-Standard,in-noida-01,Staging,Search-Engine,,,800.0,2026-07-01,1600
+vol-0402,Load test temp disk,Block-Storage-SSD,in-mumbai-01,Staging,Checkout-Core,,,300.0,2026-07-01,1200
+vol-0511,Staging DB dump,Block-Storage-SSD,in-delhi-01,Staging,Analytics-BI,,,150.0,2026-07-01,600
+vol-0601,Active production DB,Block-Storage-NVMe,in-delhi-01,Production,Checkout-Core,,,500.0,2026-07-01,2100
+vol-0602,Active search cache,Block-Storage-SSD,in-bengaluru-01,Production,Search-Engine,,,250.0,2026-07-01,1000
+ip-203-0-113-45,Unassigned legacy marketing campaign IP,Elastic-Static-IP,in-delhi-01,Staging,Marketing-Web,,,,2026-07-01,350
+ip-198-51-100-12,Former VPN gateway IP,Elastic-Static-IP,in-mumbai-01,Staging,DevOps-Infra,,,,2026-07-01,350
+ip-203-0-113-98,Old checkout microservice IP,Elastic-Static-IP,in-bengaluru-01,Staging,Checkout-Core,,,,2026-07-01,350
+ip-198-51-100-88,Deprecated crawlers pool IP,Elastic-Static-IP,in-noida-01,Staging,Search-Engine,,,,2026-07-01,350
+ip-203-0-113-04,Active API Gateway IP,Elastic-Static-IP,in-delhi-01,Production,Checkout-Core,,,,2026-07-01,350
+ip-198-51-100-01,Active Ingress LB IP,Elastic-Static-IP,in-mumbai-01,Production,Search-Engine,,,,2026-07-01,350

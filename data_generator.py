@@ -277,15 +277,68 @@ def generate_resources_csv():
     return df_res
 
 
+def generate_inventory_csv(df_vms=None, df_resources=None):
+    """
+    Creates a unified inventory.csv adhering to the standard schema:
+    resource_id, name, type, region, environment, owner, vcpu, ram_gb, disk_gb, creation_date, monthly_cost
+    """
+    if df_vms is None:
+        df_vms = pd.read_csv(os.path.join(DATA_DIR, "vms.csv"))
+    if df_resources is None:
+        df_resources = pd.read_csv(os.path.join(DATA_DIR, "resources.csv"))
+
+    rows = []
+    # Add VMs
+    for _, vm in df_vms.iterrows():
+        rows.append({
+            "resource_id": vm["vm_id"],
+            "name": vm["vm_name"],
+            "type": f"VM ({vm['instance_type']})",
+            "region": vm["region"],
+            "environment": vm["environment"],
+            "owner": vm["team"],
+            "vcpu": vm["vcpu"],
+            "ram_gb": vm["memory_gb"],
+            "disk_gb": 100,
+            "creation_date": "2026-08-15",
+            "monthly_cost": vm["monthly_cost"]
+        })
+
+    # Add Non-VM Resources (Storage & Static IPs)
+    for _, res in df_resources.iterrows():
+        is_ip = "IP" in res["resource_type"]
+        rows.append({
+            "resource_id": res["resource_id"],
+            "name": res.get("notes", res["resource_id"]),
+            "type": res["resource_type"],
+            "region": res["region"],
+            "environment": "Production" if res.get("attached") else "Staging",
+            "owner": res["team"],
+            "vcpu": np.nan,
+            "ram_gb": np.nan,
+            "disk_gb": np.nan if is_ip else res.get("size_gb", 0),
+            "creation_date": "2026-07-01",
+            "monthly_cost": res["monthly_cost"]
+        })
+
+    df_inv = pd.DataFrame(rows)
+    path = os.path.join(DATA_DIR, "inventory.csv")
+    df_inv.to_csv(path, index=False)
+    print(f"Generated {path} with {len(df_inv)} unified inventory resources.")
+    return df_inv
+
+
 def generate_all():
     print("Generating comprehensive UTHO cloud simulation dataset...")
     df_pricing = generate_pricing_csv()
     df_vms = generate_vms_csv()
     df_metrics = generate_metrics_csv(df_vms)
     df_resources = generate_resources_csv()
+    df_inventory = generate_inventory_csv(df_vms, df_resources)
     print("Dataset generation complete!")
-    return df_pricing, df_vms, df_metrics, df_resources
+    return df_pricing, df_vms, df_metrics, df_resources, df_inventory
 
 
 if __name__ == "__main__":
     generate_all()
+
