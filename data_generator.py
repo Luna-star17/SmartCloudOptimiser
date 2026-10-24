@@ -407,8 +407,8 @@ def save_sample_data(
     print(f"  - pricing_catalog.csv: {len(PRICING_CATALOG)} instance types")
 
 
-def main():
-    """CLI execution entrypoint to generate and validate the sample dataset."""
+def generate_all():
+    """Generates all datasets: inventory.csv, metrics.csv, vms.csv, resources.csv, pricing.csv."""
     print("=" * 70)
     print("SmartCloud Optimizer - Generating Simulated Cloud Environment")
     print(f"Config: {DEFAULT_NUM_VMS} VMs | {DEFAULT_DAYS} Days | 15-min Intervals | Seed: {DEFAULT_SEED}")
@@ -420,9 +420,17 @@ def main():
     print("\n[1/3] Generating cloud inventory (VMs, storage, public IPs)...")
     df_inventory = generate_inventory(n_vms=DEFAULT_NUM_VMS, seed=DEFAULT_SEED)
     print(f"  -> Generated {len(df_inventory)} total resources.")
-    print("  -> Resource breakdown by type:")
-    for rtype, count in df_inventory["type"].value_counts().items():
-        print(f"     * {rtype}: {count}")
+
+    # Export companion vms.csv and resources.csv for app.py dashboard backward-compatibility
+    vm_df = df_inventory[df_inventory["type"] == "VM"].copy()
+    vm_df = vm_df.rename(columns={"name": "vm_name", "owner": "team", "ram_gb": "memory_gb"})
+    vm_df["vm_id"] = vm_df["resource_id"]
+    vm_df.to_csv(os.path.join(DATA_DIR, "vms.csv"), index=False)
+
+    res_df = df_inventory[df_inventory["type"] != "VM"].copy()
+    res_df = res_df.rename(columns={"type": "resource_type", "owner": "team", "disk_size_gb": "size_gb"})
+    res_df["attached"] = res_df["attached_to"] != "unattached"
+    res_df.to_csv(os.path.join(DATA_DIR, "resources.csv"), index=False)
 
     # Step 2: Generate metrics
     print("\n[2/3] Generating 30 days of 15-minute telemetry per VM (vectorized)...")
@@ -432,16 +440,31 @@ def main():
         interval_minutes=DEFAULT_INTERVAL_MINUTES,
         seed=DEFAULT_SEED,
     )
+    # Also add vm_id column for app.py compatibility
+    df_metrics["vm_id"] = df_metrics["resource_id"]
+    df_metrics["cpu_pct"] = df_metrics["cpu_percent"]
+    df_metrics["memory_pct"] = df_metrics["memory_percent"]
+    df_metrics["disk_iops"] = df_metrics["iops"]
+    df_metrics["network_mbps"] = df_metrics["network_in_mb"] + df_metrics["network_out_mb"]
     print(f"  -> Generated {len(df_metrics):,} telemetry records.")
 
     # Step 3: Save to CSV
     print("\n[3/3] Saving data files...")
     save_sample_data(df_inventory, df_metrics)
 
+    # Also save pricing.csv for dashboard
+    pd.DataFrame(PRICING_CATALOG).to_csv(os.path.join(DATA_DIR, "pricing.csv"), index=False)
+
     elapsed = (datetime.now() - start_time).total_seconds()
     print(f"\nCompleted data generation pipeline in {elapsed:.2f} seconds.")
     print("=" * 70)
+    return df_inventory, df_metrics
+
+
+def main():
+    generate_all()
 
 
 if __name__ == "__main__":
     main()
+
