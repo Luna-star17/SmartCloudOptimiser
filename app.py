@@ -265,6 +265,10 @@ def load_all_data():
     # 3. Load Unified Inventory
     if os.path.exists(inventory_path):
         df_inventory = pd.read_csv(inventory_path)
+        if "disk_size_gb" in df_inventory.columns and "disk_gb" not in df_inventory.columns:
+            df_inventory["disk_gb"] = df_inventory["disk_size_gb"]
+        elif "disk_gb" in df_inventory.columns and "disk_size_gb" not in df_inventory.columns:
+            df_inventory["disk_size_gb"] = df_inventory["disk_gb"]
     elif not df_vms.empty:
         # Generate on-the-fly if inventory.csv not yet written
         inv_rows = []
@@ -312,6 +316,32 @@ def load_all_data():
         df_metrics = pd.read_csv(metrics_path)
         if "timestamp" in df_metrics.columns:
             df_metrics["timestamp"] = pd.to_datetime(df_metrics["timestamp"])
+        
+        # Ensure column aliases exist so all views work transparently
+        if "disk_used_percent" in df_metrics.columns and "disk_used_pct" not in df_metrics.columns:
+            df_metrics["disk_used_pct"] = df_metrics["disk_used_percent"]
+        elif "disk_used_pct" in df_metrics.columns and "disk_used_percent" not in df_metrics.columns:
+            df_metrics["disk_used_percent"] = df_metrics["disk_used_pct"]
+
+        if "cpu_percent" in df_metrics.columns and "cpu_pct" not in df_metrics.columns:
+            df_metrics["cpu_pct"] = df_metrics["cpu_percent"]
+        elif "cpu_pct" in df_metrics.columns and "cpu_percent" not in df_metrics.columns:
+            df_metrics["cpu_percent"] = df_metrics["cpu_pct"]
+
+        if "memory_percent" in df_metrics.columns and "memory_pct" not in df_metrics.columns:
+            df_metrics["memory_pct"] = df_metrics["memory_percent"]
+        elif "memory_pct" in df_metrics.columns and "memory_percent" not in df_metrics.columns:
+            df_metrics["memory_percent"] = df_metrics["memory_pct"]
+
+        if "iops" in df_metrics.columns and "disk_iops" not in df_metrics.columns:
+            df_metrics["disk_iops"] = df_metrics["iops"]
+        elif "disk_iops" in df_metrics.columns and "iops" not in df_metrics.columns:
+            df_metrics["iops"] = df_metrics["disk_iops"]
+
+        if "resource_id" in df_metrics.columns and "vm_id" not in df_metrics.columns:
+            df_metrics["vm_id"] = df_metrics["resource_id"]
+        elif "vm_id" in df_metrics.columns and "resource_id" not in df_metrics.columns:
+            df_metrics["resource_id"] = df_metrics["vm_id"]
     else:
         errors.append(f"Missing file: {metrics_path}")
         df_metrics = pd.DataFrame()
@@ -756,9 +786,13 @@ elif selected_page == "Resource Inventory":
         df_table["Monthly Cost (INR)"] = df_table["monthly_cost"].apply(format_inr)
         
         # Clean formatting for vCPU and RAM: Display missing as "N/A"
-        df_table["vCPU"] = df_table["vcpu"].apply(lambda x: "N/A" if pd.isna(x) else f"{int(x)} vCPU")
-        df_table["RAM"] = df_table["ram_gb"].apply(lambda x: "N/A" if pd.isna(x) else f"{int(x)} GB")
-        df_table["Disk Size"] = df_table["disk_gb"].apply(lambda x: "N/A" if pd.isna(x) else f"{int(x)} GB")
+        df_table["vCPU"] = df_table["vcpu"].apply(lambda x: "N/A" if pd.isna(x) else f"{int(x)} vCPU") if "vcpu" in df_table.columns else "N/A"
+        df_table["RAM"] = df_table["ram_gb"].apply(lambda x: "N/A" if pd.isna(x) else f"{int(x)} GB") if "ram_gb" in df_table.columns else "N/A"
+        disk_col = "disk_size_gb" if "disk_size_gb" in df_table.columns else ("disk_gb" if "disk_gb" in df_table.columns else None)
+        if disk_col:
+            df_table["Disk Size"] = df_table[disk_col].apply(lambda x: "N/A" if pd.isna(x) else f"{int(x)} GB")
+        else:
+            df_table["Disk Size"] = "N/A"
 
         # Rename columns to standard readable names
         columns_to_show = [
@@ -872,11 +906,11 @@ elif selected_page == "Performance Analysis":
             st.warning(f"No metric readings recorded for {active_vm_id} within the selected date range.")
         else:
             # Calculate Statistical Metrics (Average, p95, p99, Max)
-            cpu_series = v_metrics["cpu_pct"]
-            mem_series = v_metrics["memory_pct"]
-            disk_series = v_metrics["disk_used_pct"]
-            iops_series = v_metrics["disk_iops"]
-            net_series = v_metrics["network_mbps"]
+            cpu_series = v_metrics["cpu_pct"] if "cpu_pct" in v_metrics.columns else v_metrics.get("cpu_percent", pd.Series(dtype=float))
+            mem_series = v_metrics["memory_pct"] if "memory_pct" in v_metrics.columns else v_metrics.get("memory_percent", pd.Series(dtype=float))
+            disk_series = v_metrics["disk_used_pct"] if "disk_used_pct" in v_metrics.columns else v_metrics.get("disk_used_percent", pd.Series([0.0] * len(v_metrics), index=v_metrics.index))
+            iops_series = v_metrics["disk_iops"] if "disk_iops" in v_metrics.columns else v_metrics.get("iops", pd.Series([0.0] * len(v_metrics), index=v_metrics.index))
+            net_series = v_metrics["network_mbps"] if "network_mbps" in v_metrics.columns else pd.Series([0.0] * len(v_metrics), index=v_metrics.index)
 
             avg_cpu = float(cpu_series.mean())
             p95_cpu = float(np.percentile(cpu_series, 95))

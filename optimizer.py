@@ -900,8 +900,8 @@ def _generate_recommendations_list(
 
 
 def generate_recommendations(
-    df_first: pd.DataFrame,
-    df_stats: pd.DataFrame,
+    df_first: pd.DataFrame = None,
+    df_stats: pd.DataFrame = None,
     *args,
     **kwargs
 ):
@@ -913,7 +913,12 @@ def generate_recommendations(
     2. If called with (df_inventory, df_stats, config=None):
        -> Returns pd.DataFrame evaluating rules A through I (for unit tests & CLI).
     """
-    if "df_resources" in kwargs or len(args) >= 2:
+    if df_first is None:
+        df_first = kwargs.pop("df_vms", kwargs.pop("df_inventory", pd.DataFrame()))
+    if df_stats is None:
+        df_stats = kwargs.pop("df_stats", pd.DataFrame())
+
+    if "df_resources" in kwargs or len(args) >= 2 or "df_pricing" in kwargs:
         df_resources = kwargs.get("df_resources", args[0] if len(args) > 0 else pd.DataFrame())
         df_pricing = kwargs.get("df_pricing", args[1] if len(args) > 1 else pd.DataFrame(PRICING_CATALOG))
         thresholds = kwargs.get("thresholds", args[2] if len(args) > 2 else DEFAULT_THRESHOLDS.copy())
