@@ -1,0 +1,51 @@
+vm_id,vm_name,region,team,environment,instance_type,vcpu,memory_gb,monthly_cost,critical,schedule,workload_pattern
+VM-001,marketing-web-development-vm-001,in-delhi-01,Marketing-Web,Development,u1.xlarge,4,16,6200,False,Unscheduled,Underutilized
+VM-002,marketing-web-development-vm-002,in-delhi-01,Marketing-Web,Development,u1.xlarge,4,16,6200,False,Unscheduled,Underutilized
+VM-003,marketing-web-development-vm-003,in-bengaluru-01,Marketing-Web,Development,u1.xlarge,4,16,6200,False,Unscheduled,Underutilized
+VM-004,marketing-web-development-vm-004,in-mumbai-01,Marketing-Web,Development,u1.xlarge,4,16,6200,False,Unscheduled,Underutilized
+VM-005,marketing-web-development-vm-005,in-mumbai-01,Marketing-Web,Development,u1.xlarge,4,16,6200,False,Unscheduled,Underutilized
+VM-006,marketing-web-development-vm-006,in-mumbai-01,Marketing-Web,Development,u1.xlarge,4,16,6200,False,Unscheduled,Underutilized
+VM-007,devops-infra-staging-vm-007,in-delhi-01,DevOps-Infra,Staging,u1.2xlarge,8,32,12000,False,Unscheduled,Underutilized
+VM-008,devops-infra-staging-vm-008,in-delhi-01,DevOps-Infra,Staging,u1.2xlarge,8,32,12000,False,Unscheduled,Underutilized
+VM-009,devops-infra-staging-vm-009,in-noida-01,DevOps-Infra,Staging,u1.2xlarge,8,32,12000,False,Unscheduled,Underutilized
+VM-010,devops-infra-staging-vm-010,in-delhi-01,DevOps-Infra,Staging,u1.2xlarge,8,32,12000,False,Unscheduled,Underutilized
+VM-011,devops-infra-staging-vm-011,in-delhi-01,DevOps-Infra,Staging,u1.2xlarge,8,32,12000,False,Unscheduled,Underutilized
+VM-012,checkout-core-development-vm-012,in-delhi-01,Checkout-Core,Development,u1.large,4,8,3600,False,Always-On,Weekend Idle
+VM-013,checkout-core-development-vm-013,in-mumbai-01,Checkout-Core,Development,u1.large,4,8,3600,False,Always-On,Weekend Idle
+VM-014,checkout-core-development-vm-014,in-mumbai-01,Checkout-Core,Development,u1.large,4,8,3600,False,Always-On,Weekend Idle
+VM-015,checkout-core-development-vm-015,in-delhi-01,Checkout-Core,Development,u1.large,4,8,3600,False,Always-On,Weekend Idle
+VM-016,checkout-core-development-vm-016,in-mumbai-01,Checkout-Core,Development,u1.large,4,8,3600,False,Always-On,Weekend Idle
+VM-017,checkout-core-development-vm-017,in-noida-01,Checkout-Core,Development,u1.large,4,8,3600,False,Always-On,Weekend Idle
+VM-018,checkout-core-development-vm-018,in-mumbai-01,Checkout-Core,Development,u1.large,4,8,3600,False,Always-On,Weekend Idle
+VM-019,search-engine-staging-vm-019,in-noida-01,Search-Engine,Staging,u1.xlarge,4,16,6200,False,Always-On,Weekend Idle
+VM-020,search-engine-staging-vm-020,in-bengaluru-01,Search-Engine,Staging,u1.xlarge,4,16,6200,False,Always-On,Weekend Idle
+VM-021,search-engine-staging-vm-021,in-delhi-01,Search-Engine,Staging,u1.xlarge,4,16,6200,False,Always-On,Weekend Idle
+VM-022,search-engine-staging-vm-022,in-mumbai-01,Search-Engine,Staging,u1.xlarge,4,16,6200,False,Always-On,Weekend Idle
+VM-023,search-engine-staging-vm-023,in-noida-01,Search-Engine,Staging,u1.xlarge,4,16,6200,False,Always-On,Weekend Idle
+VM-024,checkout-core-production-vm-024,in-bengaluru-01,Checkout-Core,Production,u1.2xlarge,8,32,12000,False,Always-On,Bursty
+VM-025,checkout-core-production-vm-025,in-bengaluru-01,Checkout-Core,Production,u1.2xlarge,8,32,12000,False,Always-On,Bursty
+VM-026,checkout-core-production-vm-026,in-mumbai-01,Checkout-Core,Production,u1.2xlarge,8,32,12000,False,Always-On,Bursty
+VM-027,checkout-core-production-vm-027,in-mumbai-01,Checkout-Core,Production,u1.2xlarge,8,32,12000,False,Always-On,Bursty
+VM-028,checkout-core-production-vm-028,in-bengaluru-01,Checkout-Core,Production,u1.2xlarge,8,32,12000,False,Always-On,Bursty
+VM-029,search-engine-production-vm-029,in-delhi-01,Search-Engine,Production,u1.4xlarge,16,64,23500,False,Always-On,Bursty
+VM-030,search-engine-production-vm-030,in-delhi-01,Search-Engine,Production,u1.4xlarge,16,64,23500,False,Always-On,Bursty
+VM-031,search-engine-production-vm-031,in-noida-01,Search-Engine,Production,u1.4xlarge,16,64,23500,False,Always-On,Bursty
+VM-032,search-engine-production-vm-032,in-delhi-01,Search-Engine,Production,u1.4xlarge,16,64,23500,False,Always-On,Bursty
+VM-033,data-platform-production-vm-033,in-bengaluru-01,Data-Platform,Production,u1.4xlarge,16,64,23500,False,Batch-Nightly,Batch
+VM-034,data-platform-production-vm-034,in-bengaluru-01,Data-Platform,Production,u1.4xlarge,16,64,23500,False,Batch-Nightly,Batch
+VM-035,data-platform-production-vm-035,in-bengaluru-01,Data-Platform,Production,u1.4xlarge,16,64,23500,False,Batch-Nightly,Batch
+VM-036,data-platform-production-vm-036,in-delhi-01,Data-Platform,Production,u1.4xlarge,16,64,23500,False,Batch-Nightly,Batch
+VM-037,checkout-core-production-vm-037,in-noida-01,Checkout-Core,Production,u1.2xlarge,8,32,12000,True,Always-On,Critical
+VM-038,checkout-core-production-vm-038,in-delhi-01,Checkout-Core,Production,u1.2xlarge,8,32,12000,True,Always-On,Critical
+VM-039,checkout-core-production-vm-039,in-noida-01,Checkout-Core,Production,u1.2xlarge,8,32,12000,True,Always-On,Critical
+VM-040,checkout-core-production-vm-040,in-delhi-01,Checkout-Core,Production,u1.2xlarge,8,32,12000,True,Always-On,Critical
+VM-041,devops-infra-production-vm-041,in-bengaluru-01,DevOps-Infra,Production,u1.large,4,8,3600,True,Always-On,Critical
+VM-042,devops-infra-production-vm-042,in-bengaluru-01,DevOps-Infra,Production,u1.large,4,8,3600,True,Always-On,Critical
+VM-043,devops-infra-production-vm-043,in-mumbai-01,DevOps-Infra,Production,u1.large,4,8,3600,True,Always-On,Critical
+VM-044,analytics-bi-production-vm-044,in-delhi-01,Analytics-BI,Production,u1.large,4,8,3600,False,Always-On,Normal
+VM-045,analytics-bi-production-vm-045,in-delhi-01,Analytics-BI,Production,u1.large,4,8,3600,False,Always-On,Normal
+VM-046,analytics-bi-production-vm-046,in-mumbai-01,Analytics-BI,Production,u1.large,4,8,3600,False,Always-On,Normal
+VM-047,analytics-bi-production-vm-047,in-bengaluru-01,Analytics-BI,Production,u1.large,4,8,3600,False,Always-On,Normal
+VM-048,data-platform-production-vm-048,in-delhi-01,Data-Platform,Production,u1.xlarge,4,16,6200,False,Always-On,Normal
+VM-049,data-platform-production-vm-049,in-mumbai-01,Data-Platform,Production,u1.xlarge,4,16,6200,False,Always-On,Normal
+VM-050,data-platform-production-vm-050,in-delhi-01,Data-Platform,Production,u1.xlarge,4,16,6200,False,Always-On,Normal

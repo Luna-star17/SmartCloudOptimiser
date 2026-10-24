@@ -1,0 +1,15 @@
+resource_id,resource_type,region,size_gb,monthly_cost,attached,days_unattached,critical,team,notes
+vol-0091,Block-Storage-SSD,in-delhi-01,500,1800,False,42,False,Marketing-Web,Old website media backup
+vol-0142,Block-Storage-NVMe,in-mumbai-01,1000,4200,False,65,False,Data-Platform,Legacy Hadoop cluster disk
+vol-0288,Block-Storage-SSD,in-bengaluru-01,200,800,False,18,False,DevOps-Infra,Decommissioned Jenkins workspace
+vol-0315,Block-Storage-Standard,in-noida-01,800,1600,False,90,False,Search-Engine,Historical log archive
+vol-0402,Block-Storage-SSD,in-mumbai-01,300,1200,False,12,False,Checkout-Core,Load test temp disk
+vol-0511,Block-Storage-SSD,in-delhi-01,150,600,False,28,False,Analytics-BI,Staging DB dump
+vol-0601,Block-Storage-NVMe,in-delhi-01,500,2100,True,0,False,Checkout-Core,Active production DB
+vol-0602,Block-Storage-SSD,in-bengaluru-01,250,1000,True,0,False,Search-Engine,Active search cache
+ip-203-0-113-45,Elastic-Static-IP,in-delhi-01,0,350,False,34,False,Marketing-Web,Unassigned legacy marketing campaign IP
+ip-198-51-100-12,Elastic-Static-IP,in-mumbai-01,0,350,False,52,False,DevOps-Infra,Former VPN gateway IP
+ip-203-0-113-98,Elastic-Static-IP,in-bengaluru-01,0,350,False,19,False,Checkout-Core,Old checkout microservice IP
+ip-198-51-100-88,Elastic-Static-IP,in-noida-01,0,350,False,75,False,Search-Engine,Deprecated crawlers pool IP
+ip-203-0-113-04,Elastic-Static-IP,in-delhi-01,0,350,True,0,False,Checkout-Core,Active API Gateway IP
+ip-198-51-100-01,Elastic-Static-IP,in-mumbai-01,0,350,True,0,False,Search-Engine,Active Ingress LB IP
