@@ -1,0 +1,126 @@
+resource_id,name,type,region,environment,owner,vcpu,ram_gb,disk_size_gb,creation_date,status,instance_type,monthly_cost,attached_to,is_critical,workload_pattern,notes
+vm-001,payments-prod-vm-001,VM,in-mumbai-01,prod,Payments,8,32,200,2026-09-09,running,c-2xlarge,12000.0,self,False,underutilized,Simulated underutilized workload
+vm-002,search-engine-prod-vm-002,VM,in-delhi-01,prod,Search-Engine,4,16,100,2026-08-12,running,c-xlarge,6200.0,self,False,underutilized,Simulated underutilized workload
+vm-003,devops-infra-staging-vm-003,VM,in-mumbai-01,staging,DevOps-Infra,4,16,100,2026-09-23,running,c-xlarge,6200.0,self,False,underutilized,Simulated underutilized workload
+vm-004,search-engine-dev-vm-004,VM,in-mumbai-01,dev,Search-Engine,16,64,400,2026-08-17,running,c-4xlarge,23500.0,self,False,underutilized,Simulated underutilized workload
+vm-005,devops-infra-dev-vm-005,VM,in-mumbai-01,dev,DevOps-Infra,16,64,400,2026-08-14,running,c-4xlarge,23500.0,self,False,underutilized,Simulated underutilized workload
+vm-006,search-engine-staging-vm-006,VM,in-noida-01,staging,Search-Engine,16,64,400,2026-09-07,running,c-4xlarge,23500.0,self,False,underutilized,Simulated underutilized workload
+vm-007,search-engine-prod-vm-007,VM,in-mumbai-01,prod,Search-Engine,8,32,200,2026-09-03,running,c-2xlarge,12000.0,self,False,underutilized,Simulated underutilized workload
+vm-008,search-engine-dev-vm-008,VM,in-bengaluru-01,dev,Search-Engine,8,32,200,2026-09-18,running,c-2xlarge,12000.0,self,False,underutilized,Simulated underutilized workload
+vm-009,data-analytics-dev-vm-009,VM,in-mumbai-01,dev,Data-Analytics,8,32,200,2026-08-01,running,c-2xlarge,12000.0,self,False,underutilized,Simulated underutilized workload
+vm-010,devops-infra-staging-vm-010,VM,in-bengaluru-01,staging,DevOps-Infra,4,16,100,2026-08-09,running,c-xlarge,6200.0,self,False,underutilized,Simulated underutilized workload
+vm-011,devops-infra-dev-vm-011,VM,in-noida-01,dev,DevOps-Infra,8,32,200,2026-09-19,running,c-2xlarge,12000.0,self,False,underutilized,Simulated underutilized workload
+vm-012,marketing-web-prod-vm-012,VM,in-bengaluru-01,prod,Marketing-Web,8,32,200,2026-08-19,running,c-2xlarge,12000.0,self,False,underutilized,Simulated underutilized workload
+vm-013,marketing-web-dev-vm-013,VM,in-delhi-01,dev,Marketing-Web,4,16,100,2026-08-13,running,c-xlarge,6200.0,self,False,underutilized,Simulated underutilized workload
+vm-014,platform-core-dev-vm-014,VM,in-delhi-01,dev,Platform-Core,4,16,100,2026-07-31,running,c-xlarge,6200.0,self,False,underutilized,Simulated underutilized workload
+vm-015,data-analytics-staging-vm-015,VM,in-mumbai-01,staging,Data-Analytics,8,32,200,2026-08-15,running,c-2xlarge,12000.0,self,False,underutilized,Simulated underutilized workload
+vm-016,search-engine-staging-vm-016,VM,in-bengaluru-01,staging,Search-Engine,8,32,200,2026-09-11,running,c-2xlarge,12000.0,self,False,underutilized,Simulated underutilized workload
+vm-017,marketing-web-prod-vm-017,VM,in-bengaluru-01,prod,Marketing-Web,16,64,400,2026-09-20,running,c-4xlarge,23500.0,self,False,underutilized,Simulated underutilized workload
+vm-018,devops-infra-prod-vm-018,VM,in-delhi-01,prod,DevOps-Infra,4,16,100,2026-09-14,running,c-xlarge,6200.0,self,False,underutilized,Simulated underutilized workload
+vm-019,data-analytics-staging-vm-019,VM,in-noida-01,staging,Data-Analytics,16,64,400,2026-08-11,running,c-4xlarge,23500.0,self,False,underutilized,Simulated underutilized workload
+vm-020,marketing-web-staging-vm-020,VM,in-delhi-01,staging,Marketing-Web,4,16,100,2026-09-10,running,c-xlarge,6200.0,self,False,underutilized,Simulated underutilized workload
+vm-021,platform-core-staging-vm-021,VM,in-mumbai-01,staging,Platform-Core,4,16,100,2026-09-11,running,c-xlarge,6200.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-022,devops-infra-staging-vm-022,VM,in-delhi-01,staging,DevOps-Infra,4,8,100,2026-06-28,running,c-large,3600.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-023,data-analytics-staging-vm-023,VM,in-noida-01,staging,Data-Analytics,4,8,100,2026-08-17,running,c-large,3600.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-024,search-engine-staging-vm-024,VM,in-delhi-01,staging,Search-Engine,8,32,200,2026-07-07,running,c-2xlarge,12000.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-025,devops-infra-staging-vm-025,VM,in-noida-01,staging,DevOps-Infra,4,16,100,2026-08-22,running,c-xlarge,6200.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-026,devops-infra-staging-vm-026,VM,in-delhi-01,staging,DevOps-Infra,4,8,100,2026-09-13,running,c-large,3600.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-027,search-engine-dev-vm-027,VM,in-mumbai-01,dev,Search-Engine,8,32,200,2026-07-27,running,c-2xlarge,12000.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-028,data-analytics-staging-vm-028,VM,in-mumbai-01,staging,Data-Analytics,8,32,200,2026-07-22,running,c-2xlarge,12000.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-029,devops-infra-dev-vm-029,VM,in-bengaluru-01,dev,DevOps-Infra,8,32,200,2026-09-05,running,c-2xlarge,12000.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-030,marketing-web-staging-vm-030,VM,in-bengaluru-01,staging,Marketing-Web,4,8,100,2026-08-13,running,c-large,3600.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-031,search-engine-staging-vm-031,VM,in-noida-01,staging,Search-Engine,4,8,100,2026-08-17,running,c-large,3600.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-032,devops-infra-dev-vm-032,VM,in-delhi-01,dev,DevOps-Infra,8,32,200,2026-08-12,running,c-2xlarge,12000.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-033,search-engine-staging-vm-033,VM,in-delhi-01,staging,Search-Engine,4,8,100,2026-07-12,running,c-large,3600.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-034,devops-infra-staging-vm-034,VM,in-mumbai-01,staging,DevOps-Infra,4,16,100,2026-09-17,running,c-xlarge,6200.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-035,platform-core-staging-vm-035,VM,in-mumbai-01,staging,Platform-Core,4,8,100,2026-09-12,running,c-large,3600.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-036,devops-infra-dev-vm-036,VM,in-delhi-01,dev,DevOps-Infra,4,8,100,2026-07-19,running,c-large,3600.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-037,devops-infra-dev-vm-037,VM,in-mumbai-01,dev,DevOps-Infra,4,8,100,2026-06-27,running,c-large,3600.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-038,devops-infra-dev-vm-038,VM,in-noida-01,dev,DevOps-Infra,4,16,100,2026-07-14,running,c-xlarge,6200.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-039,search-engine-dev-vm-039,VM,in-noida-01,dev,Search-Engine,8,32,200,2026-08-11,running,c-2xlarge,12000.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-040,marketing-web-staging-vm-040,VM,in-noida-01,staging,Marketing-Web,4,16,100,2026-07-15,running,c-xlarge,6200.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-041,payments-dev-vm-041,VM,in-noida-01,dev,Payments,4,8,100,2026-09-11,running,c-large,3600.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-042,payments-dev-vm-042,VM,in-bengaluru-01,dev,Payments,8,32,200,2026-08-22,running,c-2xlarge,12000.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-043,payments-dev-vm-043,VM,in-mumbai-01,dev,Payments,4,8,100,2026-09-11,running,c-large,3600.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-044,platform-core-dev-vm-044,VM,in-mumbai-01,dev,Platform-Core,8,32,200,2026-08-20,running,c-2xlarge,12000.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-045,marketing-web-staging-vm-045,VM,in-bengaluru-01,staging,Marketing-Web,4,8,100,2026-07-12,running,c-large,3600.0,self,False,idle_nonprod,Simulated idle_nonprod workload
+vm-046,marketing-web-prod-vm-046,VM,in-delhi-01,prod,Marketing-Web,8,32,200,2026-07-26,running,c-2xlarge,12000.0,self,False,bursty,Simulated bursty workload
+vm-047,data-analytics-staging-vm-047,VM,in-noida-01,staging,Data-Analytics,8,32,200,2026-09-08,running,c-2xlarge,12000.0,self,False,bursty,Simulated bursty workload
+vm-048,platform-core-prod-vm-048,VM,in-noida-01,prod,Platform-Core,16,64,400,2026-08-16,running,c-4xlarge,23500.0,self,False,bursty,Simulated bursty workload
+vm-049,marketing-web-staging-vm-049,VM,in-mumbai-01,staging,Marketing-Web,8,32,200,2026-08-20,running,c-2xlarge,12000.0,self,False,bursty,Simulated bursty workload
+vm-050,payments-staging-vm-050,VM,in-bengaluru-01,staging,Payments,8,32,200,2026-09-02,running,c-2xlarge,12000.0,self,False,bursty,Simulated bursty workload
+vm-051,search-engine-prod-vm-051,VM,in-noida-01,prod,Search-Engine,8,32,200,2026-08-28,running,c-2xlarge,12000.0,self,False,bursty,Simulated bursty workload
+vm-052,search-engine-staging-vm-052,VM,in-noida-01,staging,Search-Engine,16,64,400,2026-07-25,running,c-4xlarge,23500.0,self,False,bursty,Simulated bursty workload
+vm-053,payments-staging-vm-053,VM,in-mumbai-01,staging,Payments,8,32,200,2026-07-17,running,c-2xlarge,12000.0,self,False,bursty,Simulated bursty workload
+vm-054,search-engine-prod-vm-054,VM,in-delhi-01,prod,Search-Engine,16,64,400,2026-08-15,running,c-4xlarge,23500.0,self,False,bursty,Simulated bursty workload
+vm-055,data-analytics-staging-vm-055,VM,in-delhi-01,staging,Data-Analytics,8,32,200,2026-08-21,running,c-2xlarge,12000.0,self,False,bursty,Simulated bursty workload
+vm-056,data-analytics-prod-vm-056,VM,in-mumbai-01,prod,Data-Analytics,16,64,400,2026-08-27,running,c-4xlarge,23500.0,self,False,bursty,Simulated bursty workload
+vm-057,marketing-web-prod-vm-057,VM,in-noida-01,prod,Marketing-Web,8,32,200,2026-09-02,running,c-2xlarge,12000.0,self,False,bursty,Simulated bursty workload
+vm-058,search-engine-staging-vm-058,VM,in-bengaluru-01,staging,Search-Engine,8,32,200,2026-07-29,running,c-2xlarge,12000.0,self,False,bursty,Simulated bursty workload
+vm-059,payments-staging-vm-059,VM,in-bengaluru-01,staging,Payments,16,64,400,2026-08-13,running,c-4xlarge,23500.0,self,False,bursty,Simulated bursty workload
+vm-060,payments-staging-vm-060,VM,in-delhi-01,staging,Payments,8,32,200,2026-09-10,running,c-2xlarge,12000.0,self,False,bursty,Simulated bursty workload
+vm-061,marketing-web-staging-vm-061,VM,in-mumbai-01,staging,Marketing-Web,16,64,400,2026-09-07,running,c-4xlarge,23500.0,self,False,bursty,Simulated bursty workload
+vm-062,devops-infra-staging-vm-062,VM,in-delhi-01,staging,DevOps-Infra,8,32,200,2026-08-19,running,c-2xlarge,12000.0,self,False,bursty,Simulated bursty workload
+vm-063,platform-core-staging-vm-063,VM,in-bengaluru-01,staging,Platform-Core,16,64,400,2026-08-30,running,c-4xlarge,23500.0,self,False,bursty,Simulated bursty workload
+vm-064,data-analytics-staging-vm-064,VM,in-bengaluru-01,staging,Data-Analytics,16,64,400,2026-08-16,running,c-4xlarge,23500.0,self,False,bursty,Simulated bursty workload
+vm-065,payments-staging-vm-065,VM,in-bengaluru-01,staging,Payments,16,64,400,2026-08-06,running,c-4xlarge,23500.0,self,False,bursty,Simulated bursty workload
+vm-066,payments-dev-vm-066,VM,in-mumbai-01,dev,Payments,2,8,50,2026-05-28,running,c-medium,2400.0,self,False,normal,Simulated normal workload
+vm-067,search-engine-staging-vm-067,VM,in-bengaluru-01,staging,Search-Engine,2,8,50,2026-08-03,running,c-medium,2400.0,self,False,normal,Simulated normal workload
+vm-068,platform-core-prod-vm-068,VM,in-bengaluru-01,prod,Platform-Core,4,8,100,2026-07-19,running,c-large,3600.0,self,False,normal,Simulated normal workload
+vm-069,marketing-web-dev-vm-069,VM,in-mumbai-01,dev,Marketing-Web,4,8,100,2026-09-08,running,c-large,3600.0,self,False,normal,Simulated normal workload
+vm-070,platform-core-prod-vm-070,VM,in-delhi-01,prod,Platform-Core,2,8,50,2026-08-26,running,c-medium,2400.0,self,False,normal,Simulated normal workload
+vm-071,platform-core-dev-vm-071,VM,in-bengaluru-01,dev,Platform-Core,2,8,50,2026-07-09,running,c-medium,2400.0,self,False,normal,Simulated normal workload
+vm-072,marketing-web-dev-vm-072,VM,in-delhi-01,dev,Marketing-Web,4,8,100,2026-05-28,running,c-large,3600.0,self,False,normal,Simulated normal workload
+vm-073,platform-core-prod-vm-073,VM,in-noida-01,prod,Platform-Core,2,8,50,2026-06-18,running,c-medium,2400.0,self,False,normal,Simulated normal workload
+vm-074,payments-prod-vm-074,VM,in-bengaluru-01,prod,Payments,4,8,100,2026-09-01,running,c-large,3600.0,self,False,normal,Simulated normal workload
+vm-075,search-engine-dev-vm-075,VM,in-bengaluru-01,dev,Search-Engine,4,8,100,2026-06-17,running,c-large,3600.0,self,False,normal,Simulated normal workload
+vm-076,payments-prod-vm-076,VM,in-mumbai-01,prod,Payments,4,16,100,2026-08-27,running,c-xlarge,6200.0,self,False,normal,Simulated normal workload
+vm-077,platform-core-dev-vm-077,VM,in-mumbai-01,dev,Platform-Core,4,16,100,2026-08-28,running,c-xlarge,6200.0,self,False,normal,Simulated normal workload
+vm-078,search-engine-prod-vm-078,VM,in-noida-01,prod,Search-Engine,4,8,100,2026-07-03,running,c-large,3600.0,self,False,normal,Simulated normal workload
+vm-079,platform-core-prod-vm-079,VM,in-mumbai-01,prod,Platform-Core,4,16,100,2026-08-02,running,c-xlarge,6200.0,self,False,normal,Simulated normal workload
+vm-080,platform-core-dev-vm-080,VM,in-mumbai-01,dev,Platform-Core,4,8,100,2026-08-26,running,c-large,3600.0,self,False,normal,Simulated normal workload
+vm-081,search-engine-prod-vm-081,VM,in-delhi-01,prod,Search-Engine,4,8,100,2026-09-28,running,c-large,3600.0,self,False,normal,Simulated normal workload
+vm-082,marketing-web-staging-vm-082,VM,in-delhi-01,staging,Marketing-Web,4,8,100,2026-08-02,running,c-large,3600.0,self,False,normal,Simulated normal workload
+vm-083,search-engine-dev-vm-083,VM,in-bengaluru-01,dev,Search-Engine,2,8,50,2026-06-29,running,c-medium,2400.0,self,False,normal,Simulated normal workload
+vm-084,data-analytics-prod-vm-084,VM,in-mumbai-01,prod,Data-Analytics,2,8,50,2026-06-09,running,c-medium,2400.0,self,False,normal,Simulated normal workload
+vm-085,platform-core-prod-vm-085,VM,in-bengaluru-01,prod,Platform-Core,2,8,50,2026-09-28,running,c-medium,2400.0,self,False,normal,Simulated normal workload
+vm-086,data-analytics-prod-vm-086,VM,in-delhi-01,prod,Data-Analytics,16,64,400,2026-07-21,running,c-4xlarge,23500.0,self,True,critical_prod,Simulated critical_prod workload
+vm-087,platform-core-prod-vm-087,VM,in-mumbai-01,prod,Platform-Core,16,64,400,2026-06-04,running,c-4xlarge,23500.0,self,True,critical_prod,Simulated critical_prod workload
+vm-088,marketing-web-prod-vm-088,VM,in-noida-01,prod,Marketing-Web,16,64,400,2026-04-27,running,c-4xlarge,23500.0,self,True,critical_prod,Simulated critical_prod workload
+vm-089,payments-prod-vm-089,VM,in-mumbai-01,prod,Payments,16,64,400,2026-08-03,running,c-4xlarge,23500.0,self,True,critical_prod,Simulated critical_prod workload
+vm-090,payments-prod-vm-090,VM,in-bengaluru-01,prod,Payments,8,32,200,2026-06-10,running,c-2xlarge,12000.0,self,True,critical_prod,Simulated critical_prod workload
+vm-091,platform-core-prod-vm-091,VM,in-noida-01,prod,Platform-Core,16,64,400,2026-07-01,running,c-4xlarge,23500.0,self,True,critical_prod,Simulated critical_prod workload
+vm-092,data-analytics-prod-vm-092,VM,in-mumbai-01,prod,Data-Analytics,8,32,200,2026-07-24,running,c-2xlarge,12000.0,self,True,critical_prod,Simulated critical_prod workload
+vm-093,marketing-web-prod-vm-093,VM,in-mumbai-01,prod,Marketing-Web,16,64,400,2026-08-25,running,c-4xlarge,23500.0,self,True,critical_prod,Simulated critical_prod workload
+vm-094,platform-core-prod-vm-094,VM,in-delhi-01,prod,Platform-Core,16,64,400,2026-08-17,running,c-4xlarge,23500.0,self,True,critical_prod,Simulated critical_prod workload
+vm-095,devops-infra-prod-vm-095,VM,in-bengaluru-01,prod,DevOps-Infra,16,64,400,2026-06-02,running,c-4xlarge,23500.0,self,True,critical_prod,Simulated critical_prod workload
+vm-096,marketing-web-prod-vm-096,VM,in-mumbai-01,prod,Marketing-Web,16,64,400,2026-06-22,running,c-4xlarge,23500.0,self,True,critical_prod,Simulated critical_prod workload
+vm-097,marketing-web-prod-vm-097,VM,in-bengaluru-01,prod,Marketing-Web,16,64,400,2026-07-15,running,c-4xlarge,23500.0,self,True,critical_prod,Simulated critical_prod workload
+vm-098,marketing-web-prod-vm-098,VM,in-noida-01,prod,Marketing-Web,16,64,400,2026-06-16,running,c-4xlarge,23500.0,self,True,critical_prod,Simulated critical_prod workload
+vm-099,search-engine-prod-vm-099,VM,in-delhi-01,prod,Search-Engine,16,64,400,2026-06-01,running,c-4xlarge,23500.0,self,True,critical_prod,Simulated critical_prod workload
+vm-100,marketing-web-prod-vm-100,VM,in-noida-01,prod,Marketing-Web,8,32,200,2026-06-08,running,c-2xlarge,12000.0,self,True,critical_prod,Simulated critical_prod workload
+vol-001,marketing-media-archive,block_volume,in-delhi-01,dev,Marketing-Web,N/A,N/A,500,2026-09-09,available,N/A,1500.0,unattached,False,unattached,Orphaned volume from decommissioned CMS
+vol-002,hadoop-legacy-cluster-disk,block_volume,in-mumbai-01,prod,Data-Analytics,N/A,N/A,1000,2026-08-17,available,N/A,3000.0,unattached,False,unattached,Unattached volume after spark migration
+vol-003,jenkins-workspace-backup,block_volume,in-bengaluru-01,dev,DevOps-Infra,N/A,N/A,250,2026-10-05,available,N/A,750.0,unattached,False,unattached,Orphaned test runner storage
+vol-004,es-indexer-old-snapshot,block_volume,in-noida-01,staging,Search-Engine,N/A,N/A,800,2026-07-24,available,N/A,2400.0,unattached,False,unattached,Abandoned indexing snapshot
+vol-005,loadtest-temp-scratchpad,block_volume,in-mumbai-01,staging,Payments,N/A,N/A,400,2026-10-10,available,N/A,1200.0,unattached,False,unattached,Completed stress test volume
+vol-006,bi-staging-db-dump,block_volume,in-delhi-01,dev,Data-Analytics,N/A,N/A,200,2026-09-24,available,N/A,600.0,unattached,False,unattached,Unattached database dump
+vol-007,qa-cold-storage-log,block_volume,in-delhi-01,dev,DevOps-Infra,N/A,N/A,500,2026-08-25,in-use,N/A,1500.0,vm-001,False,attached_storage,Attached volume with 8% disk usage and zero IOPS
+vol-008,reports-scratch-disk,block_volume,in-mumbai-01,staging,Data-Analytics,N/A,N/A,600,2026-08-30,in-use,N/A,1800.0,vm-002,False,attached_storage,Attached volume with 11% disk usage and low IOPS
+vol-009,prod-payments-db-data,block_volume,in-mumbai-01,prod,Payments,N/A,N/A,1000,2026-06-26,in-use,N/A,5000.0,vm-020,False,attached_storage,Active production NVMe block storage
+vol-010,prod-search-index-data,block_volume,in-bengaluru-01,prod,Search-Engine,N/A,N/A,1200,2026-07-06,in-use,N/A,6000.0,vm-021,False,attached_storage,Active search index NVMe volume
+vol-011,prod-platform-cache-data,block_volume,in-delhi-01,prod,Platform-Core,N/A,N/A,500,2026-07-21,in-use,N/A,2500.0,vm-022,False,attached_storage,Active production cache volume
+vol-012,analytics-warehouse-ingest,block_volume,in-mumbai-01,prod,Data-Analytics,N/A,N/A,800,2026-07-31,in-use,N/A,4000.0,vm-023,False,attached_storage,Active ingestion buffer
+vol-013,devops-gitlab-registry,block_volume,in-noida-01,dev,DevOps-Infra,N/A,N/A,300,2026-08-15,in-use,N/A,900.0,vm-024,False,attached_storage,Active container registry storage
+vol-014,marketing-prod-assets,block_volume,in-delhi-01,prod,Marketing-Web,N/A,N/A,400,2026-08-20,in-use,N/A,1200.0,vm-025,False,attached_storage,Active marketing assets storage
+vol-015,core-api-logs-volume,block_volume,in-bengaluru-01,prod,Platform-Core,N/A,N/A,600,2026-08-05,in-use,N/A,1800.0,vm-026,False,attached_storage,Active logs volume
+ip-001,marketing-campaign-legacy-ip,public_ip,in-delhi-01,dev,Marketing-Web,N/A,N/A,N/A,2026-09-16,unassigned,N/A,350.0,unassigned,False,unassigned,Unassigned static IP from previous campaign
+ip-002,vpn-gateway-deprecate-ip,public_ip,in-mumbai-01,staging,DevOps-Infra,N/A,N/A,N/A,2026-08-31,unassigned,N/A,350.0,unassigned,False,unassigned,Unassigned IP after VPN migration
+ip-003,checkout-staging-spare-ip,public_ip,in-bengaluru-01,staging,Payments,N/A,N/A,N/A,2026-10-03,unassigned,N/A,350.0,unassigned,False,unassigned,Unassigned spare staging elastic IP
+ip-004,search-crawler-test-ip,public_ip,in-noida-01,dev,Search-Engine,N/A,N/A,N/A,2026-08-13,unassigned,N/A,350.0,unassigned,False,unassigned,Unassigned IP from old crawler test bed
+ip-005,bi-analytics-exporter-ip,public_ip,in-delhi-01,dev,Data-Analytics,N/A,N/A,N/A,2026-10-08,unassigned,N/A,350.0,unassigned,False,unassigned,Unassigned reporting ingress IP
+ip-006,prod-payments-api-gw-ip,public_ip,in-mumbai-01,prod,Payments,N/A,N/A,N/A,2026-06-26,associated,N/A,350.0,vm-020,False,associated_ip,Active production payments gateway IP
+ip-007,prod-search-ingress-ip,public_ip,in-bengaluru-01,prod,Search-Engine,N/A,N/A,N/A,2026-07-06,associated,N/A,350.0,vm-021,False,associated_ip,Active production search entrypoint IP
+ip-008,prod-platform-lb-ip,public_ip,in-delhi-01,prod,Platform-Core,N/A,N/A,N/A,2026-07-21,associated,N/A,350.0,vm-022,False,associated_ip,Active production load balancer IP
+ip-009,prod-data-pipeline-ip,public_ip,in-mumbai-01,prod,Data-Analytics,N/A,N/A,N/A,2026-07-31,associated,N/A,350.0,vm-023,False,associated_ip,Active data ingest IP
+ip-010,dev-gitlab-runner-ip,public_ip,in-noida-01,dev,DevOps-Infra,N/A,N/A,N/A,2026-08-15,associated,N/A,350.0,vm-024,False,associated_ip,Active dev tools IP

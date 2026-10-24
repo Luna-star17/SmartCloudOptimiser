@@ -1,0 +1,9 @@
+instance_type,vcpu,ram_gb,monthly_cost
+c-nano,1,1,350.0
+c-micro,1,2,650.0
+c-small,2,4,1300.0
+c-medium,2,8,2400.0
+c-large,4,8,3600.0
+c-xlarge,4,16,6200.0
+c-2xlarge,8,32,12000.0
+c-4xlarge,16,64,23500.0
