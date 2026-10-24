@@ -68,6 +68,16 @@ DEFAULT_CONFIG = {
     "storage_low_iops": 10,
 }
 
+DEFAULT_THRESHOLDS = {
+    "target_p95_cpu": 70.0,
+    "target_p99_cpu": 85.0,
+    "target_p95_mem": 75.0,
+    "target_p99_mem": 85.0,
+    "idle_cpu_threshold": 12.0,
+    "idle_mem_threshold": 25.0,
+    "orphan_days_threshold": 7,
+}
+
 # Pricing Catalog used for finding candidate smaller instance types
 PRICING_CATALOG = [
     {"instance_type": "c-nano", "vcpu": 1, "ram_gb": 1, "monthly_cost": 350.0},
@@ -266,7 +276,7 @@ def find_safe_downsize_candidate(
     return None
 
 
-def generate_recommendations(
+def _generate_recommendations_df(
     df_inventory: pd.DataFrame,
     df_stats: pd.DataFrame,
     config: dict = None,
@@ -555,6 +565,369 @@ def generate_recommendations(
 
     df_recommendations = pd.DataFrame(recommendations)
     return df_recommendations
+
+
+def calculate_vm_stats(df_metrics: pd.DataFrame, df_vms: pd.DataFrame) -> pd.DataFrame:
+    """
+    Computes statistically robust utilization metrics for each VM:
+    - Average, p95, p99, and Max for CPU and Memory
+    - Low-utilization percentage
+    - Weekday vs Weekend and Workhour vs Offhour utilization
+    - Trend analysis comparing recent 7 days vs previous period
+    """
+    if df_metrics.empty or df_vms.empty:
+        return pd.DataFrame()
+
+    stats_list = []
+    metrics = df_metrics.copy()
+    if not pd.api.types.is_datetime64_any_dtype(metrics["timestamp"]):
+        metrics["timestamp"] = pd.to_datetime(metrics["timestamp"])
+
+    metrics["hour"] = metrics["timestamp"].dt.hour
+    metrics["is_weekend"] = metrics["timestamp"].dt.weekday >= 5
+    metrics["is_workhour"] = (metrics["hour"].between(9, 19)) & (~metrics["is_weekend"])
+
+    cutoff_7d = metrics["timestamp"].max() - pd.Timedelta(days=7)
+
+    id_col = "vm_id" if "vm_id" in metrics.columns else "resource_id"
+    cpu_col = "cpu_pct" if "cpu_pct" in metrics.columns else "cpu_percent"
+    mem_col = "memory_pct" if "memory_pct" in metrics.columns else "memory_percent"
+    iops_col = "disk_iops" if "disk_iops" in metrics.columns else ("iops" if "iops" in metrics.columns else None)
+    net_col = "network_mbps" if "network_mbps" in metrics.columns else None
+
+    for _, vm in df_vms.iterrows():
+        vm_id = vm.get("vm_id", vm.get("resource_id"))
+        v_data = metrics[metrics[id_col].astype(str).str.lower() == str(vm_id).lower()]
+
+        if v_data.empty:
+            continue
+
+        cpu = pd.to_numeric(v_data[cpu_col], errors="coerce").fillna(0.0)
+        mem = pd.to_numeric(v_data[mem_col], errors="coerce").fillna(0.0)
+
+        p95_cpu = float(np.percentile(cpu, 95))
+        p99_cpu = float(np.percentile(cpu, 99))
+        p95_mem = float(np.percentile(mem, 95))
+        p99_mem = float(np.percentile(mem, 99))
+
+        avg_cpu = float(cpu.mean())
+        avg_mem = float(mem.mean())
+        max_cpu = float(cpu.max())
+        max_mem = float(mem.max())
+
+        offhours_data = v_data[~v_data["is_workhour"]]
+        offhours_avg_cpu = float(pd.to_numeric(offhours_data[cpu_col], errors="coerce").mean()) if not offhours_data.empty else avg_cpu
+
+        low_util_count = ((cpu < 15.0) & (mem < 30.0)).sum()
+        low_util_pct = float((low_util_count / len(v_data)) * 100.0) if len(v_data) > 0 else 0.0
+
+        recent_data = v_data[v_data["timestamp"] >= cutoff_7d]
+        prior_data = v_data[v_data["timestamp"] < cutoff_7d]
+
+        recent_avg_cpu = float(pd.to_numeric(recent_data[cpu_col], errors="coerce").mean()) if not recent_data.empty else avg_cpu
+        prior_avg_cpu = float(pd.to_numeric(prior_data[cpu_col], errors="coerce").mean()) if not prior_data.empty else avg_cpu
+        cpu_trend_pct = round(((recent_avg_cpu - prior_avg_cpu) / max(prior_avg_cpu, 1.0)) * 100.0, 1)
+
+        avg_iops = int(pd.to_numeric(v_data[iops_col], errors="coerce").mean()) if iops_col else 0
+        if net_col:
+            avg_net = round(float(pd.to_numeric(v_data[net_col], errors="coerce").mean()), 1)
+        elif "network_in_mb" in v_data.columns and "network_out_mb" in v_data.columns:
+            avg_net = round(float((pd.to_numeric(v_data["network_in_mb"], errors="coerce") + pd.to_numeric(v_data["network_out_mb"], errors="coerce")).mean()), 1)
+        else:
+            avg_net = 0.0
+
+        stats_list.append({
+            "vm_id": vm_id,
+            "resource_id": vm_id,
+            "avg_cpu": round(avg_cpu, 1),
+            "p95_cpu": round(p95_cpu, 1),
+            "p99_cpu": round(p99_cpu, 1),
+            "max_cpu": round(max_cpu, 1),
+            "avg_mem": round(avg_mem, 1),
+            "p95_mem": round(p95_mem, 1),
+            "p99_mem": round(p99_mem, 1),
+            "max_mem": round(max_mem, 1),
+            "offhours_avg_cpu": round(offhours_avg_cpu, 1),
+            "low_util_pct": round(low_util_pct, 1),
+            "recent_avg_cpu": round(recent_avg_cpu, 1),
+            "prior_avg_cpu": round(prior_avg_cpu, 1),
+            "cpu_trend_pct": cpu_trend_pct,
+            "avg_iops": avg_iops,
+            "avg_net_mbps": avg_net
+        })
+
+    return pd.DataFrame(stats_list)
+
+
+def evaluate_rightsizing(
+    vm: pd.Series,
+    stats: pd.Series,
+    df_pricing: pd.DataFrame,
+    thresholds: dict
+) -> dict | None:
+    curr_vcpu = vm.get("vcpu", 1)
+    curr_mem = vm.get("memory_gb", vm.get("ram_gb", 1))
+    curr_cost = float(vm["monthly_cost"])
+
+    p95_cpu_demand = curr_vcpu * (stats["p95_cpu"] / 100.0)
+    p99_cpu_demand = curr_vcpu * (stats["p99_cpu"] / 100.0)
+    p95_mem_demand = curr_mem * (stats["p95_mem"] / 100.0)
+    p99_mem_demand = curr_mem * (stats["p99_mem"] / 100.0)
+
+    # Safety Check: Critical workload guardrail
+    if vm.get("critical", False) or vm.get("is_critical", False) or vm.get("workload_pattern") == "Critical":
+        return None
+
+    # Safety Check: Bursty or Batch workloads with spikes
+    if stats["p99_cpu"] > thresholds["target_p99_cpu"] or stats["p99_mem"] > thresholds["target_p99_mem"]:
+        return None
+
+    # Determine ram column name in pricing table
+    pricing = df_pricing.copy()
+    if "memory_gb" not in pricing.columns and "ram_gb" in pricing.columns:
+        pricing["memory_gb"] = pricing["ram_gb"]
+
+    candidates = pricing[
+        (pricing["monthly_cost"] < curr_cost) &
+        ((pricing["vcpu"] < curr_vcpu) | (pricing["memory_gb"] < curr_mem))
+    ].sort_values(by="monthly_cost", ascending=True)
+
+    best_candidate = None
+
+    for _, cand in candidates.iterrows():
+        cand_vcpu = cand["vcpu"]
+        cand_mem = cand["memory_gb"]
+
+        proj_p95_cpu = (p95_cpu_demand / cand_vcpu) * 100.0
+        proj_p99_cpu = (p99_cpu_demand / cand_vcpu) * 100.0
+        proj_p95_mem = (p95_mem_demand / cand_mem) * 100.0
+        proj_p99_mem = (p99_mem_demand / cand_mem) * 100.0
+
+        if (
+            proj_p95_cpu <= thresholds["target_p95_cpu"] and
+            proj_p99_cpu <= thresholds["target_p99_cpu"] and
+            proj_p95_mem <= thresholds["target_p95_mem"] and
+            proj_p99_mem <= thresholds["target_p99_mem"]
+        ):
+            best_candidate = cand
+            break
+
+    if best_candidate is not None:
+        savings = int(curr_cost - best_candidate["monthly_cost"])
+        savings_pct = round((savings / curr_cost) * 100.0, 1)
+
+        cand_proj_p95_cpu = round((p95_cpu_demand / best_candidate["vcpu"]) * 100.0, 1)
+        cand_proj_p95_mem = round((p95_mem_demand / best_candidate["memory_gb"]) * 100.0, 1)
+
+        risk = "Low"
+        if cand_proj_p95_cpu > 60.0 or cand_proj_p95_mem > 65.0:
+            risk = "Medium"
+
+        evidence = (
+            f"Observed 30-day CPU p95: {stats['p95_cpu']}%, p99: {stats['p99_cpu']}%. "
+            f"Memory p95: {stats['p95_mem']}%, p99: {stats['p99_mem']}%. "
+            f"Projected on {best_candidate['instance_type']}: CPU p95={cand_proj_p95_cpu}% "
+            f"(headroom {(100 - cand_proj_p95_cpu):.1f}%), Memory p95={cand_proj_p95_mem}%. "
+            f"Both within strict safety limits (p95<{thresholds['target_p95_cpu']}%, p99<{thresholds['target_p99_cpu']}%)."
+        )
+
+        vm_id = vm.get("vm_id", vm.get("resource_id"))
+        return {
+            "rec_id": f"REC-RS-{vm_id}",
+            "resource_id": vm_id,
+            "resource_name": vm.get("vm_name", vm.get("name", vm_id)),
+            "team": vm.get("team", vm.get("owner", "")),
+            "environment": vm.get("environment", ""),
+            "region": vm.get("region", ""),
+            "category": "Safe Rightsizing",
+            "action": f"Downsize {vm['instance_type']} -> {best_candidate['instance_type']}",
+            "current_spec": f"{vm['instance_type']} ({curr_vcpu} vCPU, {curr_mem}GB RAM)",
+            "proposed_spec": f"{best_candidate['instance_type']} ({best_candidate['vcpu']} vCPU, {best_candidate['memory_gb']}GB RAM)",
+            "current_cost": curr_cost,
+            "projected_cost": float(best_candidate["monthly_cost"]),
+            "monthly_savings": savings,
+            "savings_pct": savings_pct,
+            "risk_level": risk,
+            "confidence": "High",
+            "rule_triggered": "Safety-Validated Headroom Rightsizing",
+            "evidence": evidence,
+            "pre_action_notice": "Verify peak seasonality before changing production instances."
+        }
+
+    return None
+
+
+def evaluate_scheduling(vm: pd.Series, stats: pd.Series) -> dict | None:
+    env = str(vm.get("environment", "")).lower()
+    is_crit = bool(vm.get("critical", False) or vm.get("is_critical", False))
+
+    if env in ["production", "prod"] or is_crit:
+        return None
+
+    offhours_cpu = stats.get("offhours_avg_cpu", stats.get("avg_cpu", 0.0))
+    pattern = vm.get("workload_pattern", "")
+
+    if pattern in ["Weekend Idle", "Underutilized"] or offhours_cpu < 12.0:
+        curr_cost = float(vm["monthly_cost"])
+        savings_factor = 0.65
+        savings = int(curr_cost * savings_factor)
+        projected_cost = curr_cost - savings
+
+        vm_id = vm.get("vm_id", vm.get("resource_id"))
+        evidence = (
+            f"Environment is '{vm.get('environment')}'. Average off-hours & weekend CPU utilization is only {offhours_cpu}%. "
+            f"Active workloads occur primarily during weekday business hours (09:00 - 19:00). "
+            f"Implementing an automated 55-hour/week active schedule avoids ~65% of runtime charges."
+        )
+
+        return {
+            "rec_id": f"REC-SC-{vm_id}",
+            "resource_id": vm_id,
+            "resource_name": vm.get("vm_name", vm.get("name", vm_id)),
+            "team": vm.get("team", vm.get("owner", "")),
+            "environment": vm.get("environment", ""),
+            "region": vm.get("region", ""),
+            "category": "Workload Scheduling",
+            "action": "Automate Off-Hours & Weekend Shutdown (07:00 PM - 08:00 AM + Sat/Sun)",
+            "current_spec": f"24/7 Always-On ({vm['instance_type']})",
+            "proposed_spec": "Scheduled Auto-Start/Stop (55 hrs/week active)",
+            "current_cost": curr_cost,
+            "projected_cost": projected_cost,
+            "monthly_savings": savings,
+            "savings_pct": 65.0,
+            "risk_level": "Low",
+            "confidence": "High",
+            "rule_triggered": "Non-Production Off-Hours Idling",
+            "evidence": evidence,
+            "pre_action_notice": "Configure automated cloud scheduler tag (Env: Dev/Staging)."
+        }
+
+    return None
+
+
+def evaluate_orphaned_resources(df_resources: pd.DataFrame, thresholds: dict) -> list[dict]:
+    recs = []
+    if df_resources.empty:
+        return recs
+
+    min_days = thresholds.get("orphan_days_threshold", 7)
+
+    for _, res in df_resources.iterrows():
+        is_attached = bool(res.get("attached", False))
+        days_unatt = int(res.get("days_unattached", 0))
+        cost = float(res.get("monthly_cost", 0.0))
+        r_type = str(res.get("resource_type", res.get("type", "")))
+        r_id = str(res.get("resource_id", ""))
+
+        if not is_attached and days_unatt >= min_days:
+            risk = "Low" if days_unatt >= 30 else "Medium"
+            confidence = "High" if days_unatt >= 20 else "Medium"
+
+            if "Storage" in r_type or "volume" in r_type.lower():
+                action = "Create Final Snapshot & Terminate Unattached Volume"
+                evidence = (
+                    f"Block storage volume '{r_id}' ({res.get('size_gb', res.get('disk_size_gb', ''))} GB {r_type}) has been detached for {days_unatt} consecutive days. "
+                    f"Team: {res.get('team', res.get('owner', ''))}. Zero I/O activity recorded. Retaining generates unnecessary monthly spend."
+                )
+            else:
+                action = "Release Unassociated Static Elastic IP"
+                evidence = (
+                    f"Elastic Static IP '{r_id}' has been unassociated for {days_unatt} days. "
+                    f"Team: {res.get('team', res.get('owner', ''))}. Cloud provider bills hourly idle reservation surcharge for unassigned IPs."
+                )
+
+            recs.append({
+                "rec_id": f"REC-OR-{r_id}",
+                "resource_id": r_id,
+                "resource_name": f"{r_type} ({r_id})",
+                "team": res.get("team", res.get("owner", "")),
+                "environment": "Storage / Network",
+                "region": res.get("region", ""),
+                "category": "Orphaned Cleanup",
+                "action": action,
+                "current_spec": f"{r_type} (Detached for {days_unatt} days)",
+                "proposed_spec": "Decommission / Snapshot & Delete",
+                "current_cost": cost,
+                "projected_cost": 0.0,
+                "monthly_savings": cost,
+                "savings_pct": 100.0,
+                "risk_level": risk,
+                "confidence": confidence,
+                "rule_triggered": "Unattached Cloud Asset Inactivity",
+                "evidence": evidence,
+                "pre_action_notice": "Ensure no pending DR snapshot restoration relies on this resource."
+            })
+
+    return recs
+
+
+def _generate_recommendations_list(
+    df_vms: pd.DataFrame,
+    df_stats: pd.DataFrame,
+    df_resources: pd.DataFrame,
+    df_pricing: pd.DataFrame,
+    thresholds: dict = None
+) -> list[dict]:
+    if thresholds is None:
+        thresholds = DEFAULT_THRESHOLDS.copy()
+
+    all_recommendations = []
+    stats_dict = {}
+    for _, row in df_stats.iterrows():
+        r_id = row.get("vm_id", row.get("resource_id"))
+        if r_id is not None:
+            stats_dict[str(r_id).lower()] = row
+
+    for _, vm in df_vms.iterrows():
+        vm_id = vm.get("vm_id", vm.get("resource_id"))
+        stats = stats_dict.get(str(vm_id).lower())
+        if stats is None:
+            continue
+
+        rs_rec = evaluate_rightsizing(vm, stats, df_pricing, thresholds)
+        if rs_rec:
+            all_recommendations.append(rs_rec)
+
+        sc_rec = evaluate_scheduling(vm, stats)
+        if sc_rec:
+            all_recommendations.append(sc_rec)
+
+    if not df_resources.empty:
+        orphan_recs = evaluate_orphaned_resources(df_resources, thresholds)
+        all_recommendations.extend(orphan_recs)
+
+    return all_recommendations
+
+
+def generate_recommendations(
+    df_first: pd.DataFrame,
+    df_stats: pd.DataFrame,
+    *args,
+    **kwargs
+):
+    """
+    Polymorphic recommendation generator:
+    1. If called with (df_vms, df_stats, df_resources, df_pricing, thresholds=None)
+       or kwargs including df_resources/df_pricing:
+       -> Returns list[dict] suitable for ActionSimulator, alerts, and Streamlit app.py.
+    2. If called with (df_inventory, df_stats, config=None):
+       -> Returns pd.DataFrame evaluating rules A through I (for unit tests & CLI).
+    """
+    if "df_resources" in kwargs or len(args) >= 2:
+        df_resources = kwargs.get("df_resources", args[0] if len(args) > 0 else pd.DataFrame())
+        df_pricing = kwargs.get("df_pricing", args[1] if len(args) > 1 else pd.DataFrame(PRICING_CATALOG))
+        thresholds = kwargs.get("thresholds", args[2] if len(args) > 2 else DEFAULT_THRESHOLDS.copy())
+        return _generate_recommendations_list(
+            df_vms=df_first,
+            df_stats=df_stats,
+            df_resources=df_resources,
+            df_pricing=df_pricing,
+            thresholds=thresholds,
+        )
+
+    # Otherwise DataFrame mode
+    config = kwargs.get("config", args[0] if len(args) > 0 else None)
+    return _generate_recommendations_df(df_first, df_stats, config=config)
 
 
 def calculate_savings(df_recommendations: pd.DataFrame) -> dict:

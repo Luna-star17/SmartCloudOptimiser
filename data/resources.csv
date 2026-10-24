@@ -1,15 +1,26 @@
-resource_id,resource_type,region,size_gb,monthly_cost,attached,days_unattached,critical,team,notes
-vol-0091,Block-Storage-SSD,in-delhi-01,500,1800,False,42,False,Marketing-Web,Old website media backup
-vol-0142,Block-Storage-NVMe,in-mumbai-01,1000,4200,False,65,False,Data-Platform,Legacy Hadoop cluster disk
-vol-0288,Block-Storage-SSD,in-bengaluru-01,200,800,False,18,False,DevOps-Infra,Decommissioned Jenkins workspace
-vol-0315,Block-Storage-Standard,in-noida-01,800,1600,False,90,False,Search-Engine,Historical log archive
-vol-0402,Block-Storage-SSD,in-mumbai-01,300,1200,False,12,False,Checkout-Core,Load test temp disk
-vol-0511,Block-Storage-SSD,in-delhi-01,150,600,False,28,False,Analytics-BI,Staging DB dump
-vol-0601,Block-Storage-NVMe,in-delhi-01,500,2100,True,0,False,Checkout-Core,Active production DB
-vol-0602,Block-Storage-SSD,in-bengaluru-01,250,1000,True,0,False,Search-Engine,Active search cache
-ip-203-0-113-45,Elastic-Static-IP,in-delhi-01,0,350,False,34,False,Marketing-Web,Unassigned legacy marketing campaign IP
-ip-198-51-100-12,Elastic-Static-IP,in-mumbai-01,0,350,False,52,False,DevOps-Infra,Former VPN gateway IP
-ip-203-0-113-98,Elastic-Static-IP,in-bengaluru-01,0,350,False,19,False,Checkout-Core,Old checkout microservice IP
-ip-198-51-100-88,Elastic-Static-IP,in-noida-01,0,350,False,75,False,Search-Engine,Deprecated crawlers pool IP
-ip-203-0-113-04,Elastic-Static-IP,in-delhi-01,0,350,True,0,False,Checkout-Core,Active API Gateway IP
-ip-198-51-100-01,Elastic-Static-IP,in-mumbai-01,0,350,True,0,False,Search-Engine,Active Ingress LB IP
+resource_id,name,resource_type,region,environment,team,vcpu,ram_gb,size_gb,creation_date,status,instance_type,monthly_cost,attached_to,is_critical,workload_pattern,notes,attached
+vol-001,marketing-media-archive,block_volume,in-delhi-01,dev,Marketing-Web,N/A,N/A,500,2026-09-09,available,N/A,1500.0,unattached,False,unattached,Orphaned volume from decommissioned CMS,False
+vol-002,hadoop-legacy-cluster-disk,block_volume,in-mumbai-01,prod,Data-Analytics,N/A,N/A,1000,2026-08-17,available,N/A,3000.0,unattached,False,unattached,Unattached volume after spark migration,False
+vol-003,jenkins-workspace-backup,block_volume,in-bengaluru-01,dev,DevOps-Infra,N/A,N/A,250,2026-10-05,available,N/A,750.0,unattached,False,unattached,Orphaned test runner storage,False
+vol-004,es-indexer-old-snapshot,block_volume,in-noida-01,staging,Search-Engine,N/A,N/A,800,2026-07-24,available,N/A,2400.0,unattached,False,unattached,Abandoned indexing snapshot,False
+vol-005,loadtest-temp-scratchpad,block_volume,in-mumbai-01,staging,Payments,N/A,N/A,400,2026-10-10,available,N/A,1200.0,unattached,False,unattached,Completed stress test volume,False
+vol-006,bi-staging-db-dump,block_volume,in-delhi-01,dev,Data-Analytics,N/A,N/A,200,2026-09-24,available,N/A,600.0,unattached,False,unattached,Unattached database dump,False
+vol-007,qa-cold-storage-log,block_volume,in-delhi-01,dev,DevOps-Infra,N/A,N/A,500,2026-08-25,in-use,N/A,1500.0,vm-001,False,attached_storage,Attached volume with 8% disk usage and zero IOPS,True
+vol-008,reports-scratch-disk,block_volume,in-mumbai-01,staging,Data-Analytics,N/A,N/A,600,2026-08-30,in-use,N/A,1800.0,vm-002,False,attached_storage,Attached volume with 11% disk usage and low IOPS,True
+vol-009,prod-payments-db-data,block_volume,in-mumbai-01,prod,Payments,N/A,N/A,1000,2026-06-26,in-use,N/A,5000.0,vm-020,False,attached_storage,Active production NVMe block storage,True
+vol-010,prod-search-index-data,block_volume,in-bengaluru-01,prod,Search-Engine,N/A,N/A,1200,2026-07-06,in-use,N/A,6000.0,vm-021,False,attached_storage,Active search index NVMe volume,True
+vol-011,prod-platform-cache-data,block_volume,in-delhi-01,prod,Platform-Core,N/A,N/A,500,2026-07-21,in-use,N/A,2500.0,vm-022,False,attached_storage,Active production cache volume,True
+vol-012,analytics-warehouse-ingest,block_volume,in-mumbai-01,prod,Data-Analytics,N/A,N/A,800,2026-07-31,in-use,N/A,4000.0,vm-023,False,attached_storage,Active ingestion buffer,True
+vol-013,devops-gitlab-registry,block_volume,in-noida-01,dev,DevOps-Infra,N/A,N/A,300,2026-08-15,in-use,N/A,900.0,vm-024,False,attached_storage,Active container registry storage,True
+vol-014,marketing-prod-assets,block_volume,in-delhi-01,prod,Marketing-Web,N/A,N/A,400,2026-08-20,in-use,N/A,1200.0,vm-025,False,attached_storage,Active marketing assets storage,True
+vol-015,core-api-logs-volume,block_volume,in-bengaluru-01,prod,Platform-Core,N/A,N/A,600,2026-08-05,in-use,N/A,1800.0,vm-026,False,attached_storage,Active logs volume,True
+ip-001,marketing-campaign-legacy-ip,public_ip,in-delhi-01,dev,Marketing-Web,N/A,N/A,N/A,2026-09-16,unassigned,N/A,350.0,unassigned,False,unassigned,Unassigned static IP from previous campaign,True
+ip-002,vpn-gateway-deprecate-ip,public_ip,in-mumbai-01,staging,DevOps-Infra,N/A,N/A,N/A,2026-08-31,unassigned,N/A,350.0,unassigned,False,unassigned,Unassigned IP after VPN migration,True
+ip-003,checkout-staging-spare-ip,public_ip,in-bengaluru-01,staging,Payments,N/A,N/A,N/A,2026-10-03,unassigned,N/A,350.0,unassigned,False,unassigned,Unassigned spare staging elastic IP,True
+ip-004,search-crawler-test-ip,public_ip,in-noida-01,dev,Search-Engine,N/A,N/A,N/A,2026-08-13,unassigned,N/A,350.0,unassigned,False,unassigned,Unassigned IP from old crawler test bed,True
+ip-005,bi-analytics-exporter-ip,public_ip,in-delhi-01,dev,Data-Analytics,N/A,N/A,N/A,2026-10-08,unassigned,N/A,350.0,unassigned,False,unassigned,Unassigned reporting ingress IP,True
+ip-006,prod-payments-api-gw-ip,public_ip,in-mumbai-01,prod,Payments,N/A,N/A,N/A,2026-06-26,associated,N/A,350.0,vm-020,False,associated_ip,Active production payments gateway IP,True
+ip-007,prod-search-ingress-ip,public_ip,in-bengaluru-01,prod,Search-Engine,N/A,N/A,N/A,2026-07-06,associated,N/A,350.0,vm-021,False,associated_ip,Active production search entrypoint IP,True
+ip-008,prod-platform-lb-ip,public_ip,in-delhi-01,prod,Platform-Core,N/A,N/A,N/A,2026-07-21,associated,N/A,350.0,vm-022,False,associated_ip,Active production load balancer IP,True
+ip-009,prod-data-pipeline-ip,public_ip,in-mumbai-01,prod,Data-Analytics,N/A,N/A,N/A,2026-07-31,associated,N/A,350.0,vm-023,False,associated_ip,Active data ingest IP,True
+ip-010,dev-gitlab-runner-ip,public_ip,in-noida-01,dev,DevOps-Infra,N/A,N/A,N/A,2026-08-15,associated,N/A,350.0,vm-024,False,associated_ip,Active dev tools IP,True
